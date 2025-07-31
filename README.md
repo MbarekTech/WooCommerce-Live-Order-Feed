@@ -34,17 +34,7 @@ I got tired of constantly refreshing my WooCommerce orders page to see if new or
 ![Live Orders Dashboard](screenshots/screenshot_pc.png)
 *Real-time order updates without page refresh*
 
-### Push Notifications
 ![Push Notification](screenshots/screenshot_mobile.png)
-*Get notified even when browser is closed*
-
-### Mobile PWA
-![Mobile App View](screenshots/mobile-pwa.png)
-*Install on phone like a native app*
-
-### Setup Screen
-![Plugin Setup](screenshots/setup-screen.png)
-*Simple one-click notification setup*
 
 ## Why I built this
 
