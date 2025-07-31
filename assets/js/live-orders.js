@@ -1,27 +1,24 @@
-// ===================================================================
-// LIVE ORDER FEED - JAVASCRIPT (Plugin Version - Fully Dynamic)
-// ===================================================================
+// Live order feed JavaScript - checks for new orders and handles notifications
 
 jQuery(document).ready(function($) {
-    // --- DYNAMIC CONFIGURATION (from PHP) ---
+    // Config from PHP
     const POLLING_INTERVAL = 7000;
     const NEW_ORDER_THRESHOLD_SECONDS = 60;
     const NOTIFICATION_SOUND_URL = live_order_ajax_object.notification_sound_url;
     const NOTIFICATION_ICON_URL = live_order_ajax_object.notification_icon_url;
 
-    // --- DOM ELEMENTS & STATE ---
-    // ... all the same state variables ...
+    // TODO: Add your DOM elements and state variables here
     
     async function initializeAndStartFeed() {
-        // ... (audio unlock and wake lock code is the same) ...
+        // TODO: Add audio unlock and wake lock code
 
         if ('serviceWorker' in navigator) {
             try {
-                // DYNAMIC: Path is now relative to the site root, as it should be.
+                // Register service worker at site root
                 const registration = await navigator.serviceWorker.register('/service-worker.js');
                 console.log('Service Worker registered.');
 
-                // DYNAMIC: Send the list of URLs to cache to the service worker
+                // Tell service worker what to cache
                 if (navigator.serviceWorker.controller) {
                     navigator.serviceWorker.controller.postMessage({
                         command: 'cache_urls',
@@ -36,13 +33,13 @@ jQuery(document).ready(function($) {
         }
 
         if (window.Worker) {
-            // DYNAMIC: Path now comes from PHP
+            // Start web worker for background processing
             const workerPath = live_order_ajax_object.plugin_assets_url + 'order-worker.js';
-            // ... (rest of the worker initialization is the same) ...
+            // TODO: Add worker initialization code
         }
         
-        // ... (rest of the function is the same) ...
+        // TODO: Add rest of initialization
     }
 
-    // ... (all other helper functions are the same) ...
+    // TODO: Add helper functions
 });

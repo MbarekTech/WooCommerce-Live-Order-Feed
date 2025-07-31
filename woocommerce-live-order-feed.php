@@ -1,24 +1,32 @@
 <?php
 /**
  * Plugin Name:       WooCommerce Live Order Feed
- * Plugin URI:        https://github.com/your-username/woocommerce-live-order-feed
- * Description:       Provides a real-time order feed dashboard for WooCommerce with PWA and push notification capabilities.
+ * Plugin URI:        https://github.com/MbarekTech/WooCommerce-Live-Order-Feed
+ * Description:       Real-time order monitoring for WooCommerce. Get notifications when orders come in.
  * Version:           1.0.0
- * Author:            Your Name
- * Author URI:        https://your-website.com
+ * Author:            Your Name Here
  * License:           GPL v2 or later
  * Text Domain:       wc-live-order-feed
  */
 
 if (!defined('ABSPATH')) exit;
 
+// ============================================================================
+// IMPORTANT: CONFIGURE THESE SETTINGS BEFORE USING THE PLUGIN
+// ============================================================================
+// 1. Replace VAPID keys below with your own from https://vapidkeys.com/
+// 2. Update "Your Name Here" in the plugin header above
+// 3. GitHub URL is now set to: https://github.com/MbarekTech/WooCommerce-Live-Order-Feed
+// ============================================================================
+
 add_action('plugins_loaded', ['WooCommerce_Live_Order_Feed', 'get_instance']);
 
 class WooCommerce_Live_Order_Feed {
 
     private static $instance = null;
-    private const VAPID_PUBLIC_KEY = 'BI3fjkkqY5t4-rvsL1M8W0VrsPH3ilfhuMtEjlSRfTbNKmPXqPHwSxzWg_sJbclijV3yBTRl8YW4s5GUf3XeF7g';
-    private const VAPID_PRIVATE_KEY = 'wVCZe5JeuPKuH0NT7E-iFzOhJiO1RVrrJpaI3hG_oVk';
+    // TODO: Replace these with your own VAPID keys from https://vapidkeys.com/
+    private const VAPID_PUBLIC_KEY = 'YOUR_PUBLIC_KEY_HERE';
+    private const VAPID_PRIVATE_KEY = 'YOUR_PRIVATE_KEY_HERE';
 
     public static function get_instance() {
         if (self::$instance === null) self::$instance = new self();
@@ -45,7 +53,7 @@ class WooCommerce_Live_Order_Feed {
     
     public function add_pwa_manifest_link() {
         if (is_page('feed-2')) {
-            // DYNAMIC: Point to our virtual manifest endpoint
+            // Points to our virtual manifest endpoint
             echo '<link rel="manifest" href="' . home_url('/?wclof_manifest=true') . '">';
         }
     }
@@ -81,7 +89,7 @@ class WooCommerce_Live_Order_Feed {
         wp_enqueue_style('wc-live-order-feed-style', plugin_dir_url(__FILE__) . 'assets/css/live-orders.css', [], '1.1.0');
         wp_enqueue_script('wc-live-order-feed-script', plugin_dir_url(__FILE__) . 'assets/js/live-orders.js', ['jquery'], '1.1.0', true);
 
-        // DYNAMIC: Pass all dynamic URLs to JavaScript
+        // Pass all URLs to JavaScript so it works on any domain
         wp_localize_script('wc-live-order-feed-script', 'live_order_ajax_object', [
             'ajax_url'    => admin_url('admin-ajax.php'),
             'nonce'       => wp_create_nonce('live_order_feed_nonce'),

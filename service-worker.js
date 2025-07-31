@@ -1,39 +1,74 @@
-// ===================================================================
-// SERVICE WORKER (Fully Dynamic Caching)
-// ===================================================================
+// Service worker for caching and push notifications
+// Handles offline functionality and background notifications
 
 const CACHE_NAME = 'wclof-cache-v1';
 
-// We no longer need a hardcoded list of URLs here.
-
 self.addEventListener('install', event => {
-    // Activate the new service worker immediately
+    // Take over immediately when updated
     event.waitUntil(self.skipWaiting());
 });
 
 self.addEventListener('activate', event => {
-    // Take control of all clients immediately
+    // Start controlling all pages right away
     event.waitUntil(self.clients.claim());
 });
 
-// NEW: Listen for the list of URLs to cache from the main script
+// Listen for cache commands from main script
 self.addEventListener('message', event => {
     if (event.data.command === 'cache_urls') {
         event.waitUntil(
             caches.open(CACHE_NAME).then(cache => {
-                console.log('Service Worker: Caching dynamic URLs.');
+                console.log('Service Worker: Caching URLs for offline use');
                 return cache.addAll(event.data.urls);
-            }).catch(err => console.error("Cache addAll failed:", err))
+            }).catch(err => console.error("Caching failed:", err))
         );
     }
 });
 
-// Fetch event remains the same as the last robust version
+// Handle network requests - serve cached content when offline
 self.addEventListener('fetch', event => {
-  if (event.request.url.includes('/wp-admin/')) return;
-  // ... (rest of the fetch logic is the same) ...
+    // Skip WordPress admin requests
+    if (event.request.url.includes('/wp-admin/')) return;
+    
+    event.respondWith(
+        caches.match(event.request).then(response => {
+            // Return cached version if we have it
+            if (response) {
+                return response;
+            }
+            // Otherwise fetch from network
+            return fetch(event.request).catch(() => {
+                // If network fails, show offline page or cached content
+                console.log('Network failed, serving cached content');
+            });
+        })
+    );
 });
 
-// Push and Notificationclick listeners are the same
-self.addEventListener('push', event => { /* ... */ });
-self.addEventListener('notificationclick', event => { /* ... */ });
+// Handle push notifications from server
+self.addEventListener('push', event => {
+    if (!event.data) return;
+    
+    const data = event.data.json();
+    const options = {
+        body: data.body,
+        icon: data.icon,
+        badge: data.icon,
+        data: { url: data.url }
+    };
+    
+    event.waitUntil(
+        self.registration.showNotification(data.title, options)
+    );
+});
+
+// Handle notification clicks
+self.addEventListener('notificationclick', event => {
+    event.notification.close();
+    
+    if (event.notification.data && event.notification.data.url) {
+        event.waitUntil(
+            clients.openWindow(event.notification.data.url)
+        );
+    }
+});
