@@ -1,0 +1,26 @@
+{
+  "name": "WooCommerce Live Order Feed",
+  "short_name": "Order Feed",
+  "description": "Real-time monitoring of WooCommerce orders with push notifications",
+  "version": "1.1.0",
+  "start_url": "/wp-admin/admin.php?page=live-orders",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#0073aa",
+  "background_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/wp-content/plugins/woocommerce-live-order-feed/assets/images/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/wp-content/plugins/woocommerce-live-order-feed/assets/images/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["business", "productivity", "shopping"],
+  "scope": "/wp-admin/",
+  "lang": "en-US"
+}

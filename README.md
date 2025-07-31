@@ -18,14 +18,13 @@ I got tired of constantly refreshing my WooCommerce orders page to see if new or
    - Change GitHub URL to your actual repository
 
 3. **Page Slug**
-   - The plugin looks for a page with slug `feed-2` by default
+   - The plugin looks for a page with slug `live-orders` by default
    - Either create a page with that slug, or modify the code to match your page
 
 ## What it does
 
 - Orders appear on your screen as soon as they come in (no more F5 spam)
 - Push notifications work even when you close the browser tab
-- Works offline if your internet cuts out temporarily  
 - Can install it on your phone like a regular app
 - Optional "ding" sound when new orders arrive (toggle it off if it gets annoying)
 - Doesn't slow down your browser - runs everything in the background
@@ -60,7 +59,7 @@ Basic install:
 1. Download and extract to `/wp-content/plugins/`
 2. **Configure VAPID keys** (see "Before You Start" section)
 3. Activate it in WordPress admin
-4. Create a page with slug `feed-2`, add `[live_order_feed]` shortcode
+4. Create a page with slug `live-orders`, add `[live_order_feed]` shortcode
 5. Done
 
 ## Using it
