@@ -1,5 +1,7 @@
 # WooCommerce Live Order Feed
 
+> Real-time order monitoring for WooCommerce stores with push notifications and PWA support.
+
 I got tired of constantly refreshing my WooCommerce orders page to see if new orders came in, so I built this. Now orders show up automatically and I get notifications even when I'm not looking at the screen.
 
 ## Before You Start
